@@ -1,6 +1,9 @@
-﻿namespace DogInfoTracker {
+﻿using Spectre.Console;
+
+namespace DogInfoTracker {
     internal class Program {
         static void Main(string[] args) {
+            DatabaseOperations.CheckTableExist();
             Console.WriteLine("Dog Activity Tracker");
             ShowMainMenu();
         }
@@ -38,7 +41,21 @@
         }
 
         private static void ShowAllRecords() {
-            throw new NotImplementedException();
+            List<ActivityInformation> activityInformations = DatabaseOperations.GetActivityInformations();
+            var table = new Table();
+
+            table.AddColumn(new TableColumn("Id"));
+            table.AddColumn(new TableColumn("Datum"));
+            table.AddColumn(new TableColumn("Typ"));
+            table.AddColumn(new TableColumn("Cena"));
+            table.AddColumn(new TableColumn("Popis"));
+            table.AddColumn(new TableColumn("Váha"));
+
+            foreach (var activity in activityInformations) {
+                table.AddRow($"{activity.Id}", $"{activity.Date}", $"{activity.ActivityType}", $"{activity.Cost}", $"{activity.Description}", $"{activity.Weight}");
+            }
+
+            AnsiConsole.Write(table);
         }
 
         private static void AddRecord() {
