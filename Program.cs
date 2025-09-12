@@ -90,7 +90,10 @@ namespace DogInfoTracker {
         }
 
         private static void DeleteRecord() {
-            throw new NotImplementedException();
+            DatabaseOperations.GetActivityInformations();
+            Console.WriteLine("Vyber záznam k vymazání");
+            int recordIdToDelete = Int32.Parse(Console.ReadLine());
+            DatabaseOperations.DeleteRecord(recordIdToDelete);
         }
 
         private static DateTime GetUserChoiceDate(string message, out int[] datePartsOut) {
