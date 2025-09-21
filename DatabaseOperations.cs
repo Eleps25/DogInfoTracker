@@ -159,7 +159,7 @@ namespace DogInfoTracker {
                     updateMoreInfos = true;
                 }
                 updateSql = $"{updateSql} WHERE Id = @RecordId";
-                object[] parameters = { new { RecordId = recordId, Date = date, Year = year, Mont = month, Day = day, ActivityType = activityType, Cost = cost, Description = description, Weight = weight } };
+                object[] parameters = { new { RecordId = recordId, Date = date, Year = year, Month = month, Day = day, ActivityType = activityType, Cost = cost, Description = description, Weight = weight } };
                 return connection.Execute(updateSql, parameters);
             }
         }

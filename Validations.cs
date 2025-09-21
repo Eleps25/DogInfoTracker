@@ -16,7 +16,7 @@
             userNumChoice = userNumInputChoice;
         }
 
-        public static void ValidateOption(List<int> optionsList, out int userChoiceOption) {
+        public static void ValidateOption(List<int> optionsList, out int userChoiceOption, string invalidMessage) {
             bool isValidOption = false;
             int userNumInputChoice = 0;
 
@@ -25,6 +25,8 @@
 
                 if (optionsList.Contains(userNumInputChoice)) {
                     isValidOption = true;
+                } else {
+                    Console.WriteLine(invalidMessage);
                 }
             }
             userChoiceOption = userNumInputChoice;
