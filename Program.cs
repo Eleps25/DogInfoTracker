@@ -148,10 +148,28 @@ namespace DogInfoTracker {
         }
 
         private static void DeleteRecord() {
-            DatabaseOperations.GetActivityInformations();
-            Console.WriteLine("Vyber záznam k vymazání");
-            int recordIdToDelete = Int32.Parse(Console.ReadLine());
-            DatabaseOperations.DeleteRecord(recordIdToDelete);
+            ShowAllRecords();
+            Console.WriteLine("Vyber záznam k vymazání nebo stiskni 0 pro návrat do hlavního menu.");
+            List<int> optionsList = DatabaseOperations.GetActivityIds();
+            optionsList.Add(0);
+            int userRecordIdChoice;
+            Validations.ValidateOption(optionsList, out userRecordIdChoice, "Vyber platný záznam.");
+
+            if (userRecordIdChoice != 0) {
+                ActivityInformation activityInformation = DatabaseOperations.GetActivityInformationRecord(userRecordIdChoice);
+                Console.WriteLine($"Zvolený záznam: {activityInformation.Id} - {activityInformation.Date} _ {EnumHelper.GetEnumDescription(activityInformation.ActivityType)} - Cena: {activityInformation.Cost} _ Popis: {activityInformation.Description} _ Váha: {activityInformation.Weight}");
+                AnsiConsole.Markup("Chceš tento záznam smazat? ([green]1 - ano[/], [red]2 - ne[/]):\n");
+                int userChoice = Int32.Parse(Console.ReadLine());
+                Console.Clear();
+                if (userChoice == 1) {
+                    DatabaseOperations.DeleteRecord(userRecordIdChoice);
+                    AnsiConsole.Markup("[green]Záznam byl odstraněn.\n[/]");
+                } else if (userChoice == 2) {
+                    DeleteRecord();
+                }
+            } else {
+                Console.Clear();
+            }
         }
 
         private static DateTime GetUserChoiceDate(string message, out int[] datePartsOut) {
