@@ -1,8 +1,17 @@
-﻿namespace DogInfoTracker {
+﻿using System.ComponentModel;
+
+namespace DogInfoTracker {
     public enum ActivityType {
-        Krmení,
-        Veterinář,
-        Vážení,
-        Ostatní = 100
+        [Description("Veterinář")]
+        Veterinary,
+
+        [Description("Krmení")]
+        Food,
+
+        [Description("Vážení")]
+        Weight,
+
+        [Description("Ostatní")]
+        Other = 100
     }
 }
